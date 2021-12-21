@@ -16,6 +16,7 @@ def botLogin():
     print("Reddit Bot has logged in!")
     return redditBot
 
+
 #Perform Reddit Bot Actions
 def runBot(redditBot, repliedCommentsList, fileName):
     for comment in redditBot.subreddit('test').comments(limit=1000):
@@ -31,6 +32,7 @@ def runBot(redditBot, repliedCommentsList, fileName):
                 except:
                     print("Error Occured When Replying! " + "\"" + comment.body.lower() 
                            + "\"" +" by:" + str(comment.author) + "," + str(comment.id))
+                    
             elif "!f1stats constructors " in comment.body.lower():
                 possibleYear = re.findall('[0-9]{4}', comment.body.lower())
                 try:
@@ -45,15 +47,12 @@ def runBot(redditBot, repliedCommentsList, fileName):
             else:
                 print("Invalid Command: " +"\""+ comment.body.lower()
                       + "\"" + " by " + str(comment.author) + " " + str(comment.id))
+                comment.reply("Invalid usage. Check Spelling or Formatting!\n")
     
             #store the replied to comment in the list and textfile
             repliedCommentsList.append(comment.id)
             with open(fileName, "a") as f:
                 f.write(comment.id + "\n")
-
-
-
-        
 
 
 #Get Saved Comments for a text file and store them into a list 
